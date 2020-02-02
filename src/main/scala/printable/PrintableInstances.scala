@@ -1,13 +1,17 @@
 package printable
 
-object PrintableInstances {
-  implicit val printableString: Printable[String] =
-    new Printable[String] {
-      def format(value: String): String = value
-    }
+import models.Cat
 
-  implicit val printableInt: Printable[Int] =
-    new Printable[Int] {
-      def format(value: Int): String = value.toString
-    }
+object PrintableInstances {
+  implicit val printableString: Printable[String] = new Printable[String] {
+    def format(value: String): String = value
+  }
+
+  implicit val printableInt: Printable[Int] = new Printable[Int] {
+    def format(value: Int): String = value.toString
+  }
+
+  implicit val printableCat: Printable[Cat] = new Printable[Cat] {
+    def format(cat: Cat): String = s"${cat.name} is a ${cat.age} year-old ${cat.color} cat"
+  }
 }
