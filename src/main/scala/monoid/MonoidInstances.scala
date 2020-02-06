@@ -1,5 +1,7 @@
 package monoid
 
+import models.Order
+
 object MonoidInstances {
   //  ---------------- Boolean Monoids ----------------
   implicit val andMonoid: Monoid[Boolean] = new Monoid[Boolean] {
@@ -35,5 +37,15 @@ object MonoidInstances {
   implicit def symmetricDifferenceMonoid[A]: Monoid[Set[A]] = new Monoid[Set[A]] {
     def empty: Set[A] = Set.empty
     def combine(x: Set[A], y: Set[A]): Set[A] = x.diff(y) union y.diff(x)
+  }
+
+  //  ---------------- Order Monoid ----------------
+  implicit def orderMonoid: Monoid[Order] = new Monoid[Order] {
+    def empty: Order = Order(0, 0)
+    def combine(x: Order, y: Order): Order =
+      Order(
+        totalCost = x.totalCost + y.totalCost,
+        quantity = x.quantity + y.quantity
+      )
   }
 }
