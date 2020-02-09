@@ -1,6 +1,6 @@
 package printable
 
-import models.Cat
+import models.{ Box, Cat }
 
 object PrintableInstances {
   implicit val printableString: Printable[String] = new Printable[String] {
@@ -18,4 +18,9 @@ object PrintableInstances {
   implicit val printableCat: Printable[Cat] = new Printable[Cat] {
     def format(cat: Cat): String = s"${cat.name} is a ${cat.age} year-old ${cat.color} cat"
   }
+
+  implicit def printableBox[A](implicit p: Printable[A]): Printable[Box[A]] = p.contramap[Box[A]](_.value)
+//    new Printable[Box[A]] {
+//      def format(box: Box[A]): String = p.format(box.value)
+//    }
 }
